@@ -17,7 +17,11 @@ class BaseCommerceEvent
             // @phpstan-ignore-next-line
             $order = Commerce::getInstance()
                 ->getCarts()
-                ->getCart();
+                ->getCart(false, true);
+        }
+
+        if (!$order) {
+            return;
         }
 
         if (!$customData) {
@@ -36,7 +40,7 @@ class BaseCommerceEvent
         $plugin = Plugin::getInstance();
         $userData = $plugin->facebook->getUserData();
         // @phpstan-ignore-next-line
-        $customer = $order->getCustomer() ?? Commerce::getInstance()->getCarts()->getCart()->getCustomer();
+        $customer = $order->getCustomer();
         $email = $order->getEmail();
 
         if (empty($email) && $customer) {
