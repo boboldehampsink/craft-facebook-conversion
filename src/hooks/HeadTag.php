@@ -20,10 +20,11 @@ class HeadTag
         }
 
         if (class_exists(Commerce::class)) {
-            $email = Commerce::getInstance()
+            $cart = Commerce::getInstance()
                 ->getCarts()
-                ->getCart()
-                ->getEmail();
+                ->getCart(false, true);
+
+            $email = $cart?->getEmail();
 
             if ($email) {
                 $externalId = $plugin->getExternalId($email);
